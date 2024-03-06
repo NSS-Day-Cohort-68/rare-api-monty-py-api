@@ -8,7 +8,9 @@
             "name": "Python: Request Handler",
             "type": "python",
             "request": "launch",
-            "program": "./request_handler.py",
+            "program": "json-server.py",
+            // "program": "./request_handler.py",
+            "justMyCode": true,
             "console": "integratedTerminal"
         }
     ]
