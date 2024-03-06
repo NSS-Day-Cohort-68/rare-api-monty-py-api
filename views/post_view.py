@@ -7,24 +7,26 @@ def get_all_posts():
         db_cursor = conn.cursor()
 
     db_cursor.execute(
-        """ 
-        SELECT 
-            p.id
-            p.user_id
-            p.category_id
-            p.title
-            p.publication_date
-            p.image_url
-            p.content
-            p.approved
-        FROM Posts p
-        JOIN User u ON u.id = p.user_id
-        JOIN Categories c ON c.id = p.category_id
-        """
+    """ 
+    SELECT 
+        p.id,
+        p.user_id,
+        p.category_id,
+        p.title,
+        p.publication_date,
+        p.image_url,
+        p.content,
+        p.approved,
+        c.label,
+        u.first_name,
+        u.last_name
+    FROM Posts p
+    JOIN Users u ON u.id = p.user_id
+    JOIN Categories c ON c.id = p.category_id
+    """
     )
     posts = []
     query_results = db_cursor.fetchall()
-
     for row in query_results:
         post = {
             'id': row['id'],
@@ -36,14 +38,12 @@ def get_all_posts():
             'user_id': row['user_id'],
             'category_id': row['category_id']
         }
-
         post['category'] = {
-            'category_id': row['category_id'],
-            'label': row['c.label'],
+            'id': row['category_id'],
+            'label': row['label']
         }
-
         post['user'] = {
-            'user_id': row['user_id'],
+            'id': row['user_id'],
             'first_name': row['first_name'],
             'last_name': row['last_name']
         }
@@ -52,7 +52,7 @@ def get_all_posts():
     return serialized_posts
     
 
-def get_user_posts(pk):
+def get_user_posts(userId):
     with sqlite3.connect("./db.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
@@ -60,19 +60,22 @@ def get_user_posts(pk):
     db_cursor.execute(
         """ 
         SELECT 
-            p.id
-            p.user_id
-            p.category_id
-            p.title
-            p.publication_date
-            p.image_url
-            p.content
-            p.approved
+            p.id,
+            p.user_id,
+            p.category_id,
+            p.title,
+            p.publication_date,
+            p.image_url,
+            p.content,
+            p.approved, 
+            c.label,
+            u.first_name,
+            u.last_name
         FROM Posts p
         WHERE p.user_id = ?
         JOIN User u ON u.id = p.user_id
         JOIN Categories c ON c.id = p.category_id
-        """, (pk,)
+        """, (userId,)
     )
     posts = []
     query_results = db_cursor.fetchall()
@@ -90,12 +93,12 @@ def get_user_posts(pk):
         }
 
         post['category'] = {
-            'category_id': row['category_id'],
-            'label': row['c.label'],
+            'id': row['category_id'],
+            'label': row['label'],
         }
 
         post['user'] = {
-            'user_id': row['user_id'],
+            'id': row['user_id'],
             'first_name': row['first_name'],
             'last_name': row['last_name']
         }
@@ -105,55 +108,6 @@ def get_user_posts(pk):
 
 
 
-def create_post(x):
-    with sqlite3.connect("./db.sqlite3") as conn:
-        conn.row_factory = sqlite3.Row
-        db_cursor = conn.cursor()
 
-    db_cursor.execute(
-        """ 
-        INSERT INTO Posts
-        (user_id, category_id, title, publication_date, image_url, content, approved)
-        VALUES
-        (?, ?, ?, ?, ?, ?, ?)
-        """,
-        (x['user_id'], x['category_id'], x['title'], x['publication_date'], x['image_url'], x['content'], x['approved'])
-    )
-
-    return True if db_cursor.rowcount > 0 else False
-
-
-
-def edit_post(pk, data):
-    with sqlite3.connect("./db.sqlite3") as conn:
-        db_cursor = conn.cursor()
-
-    db_cursor.execute(
-        """ 
-        UPDATE Posts
-            SET
-                category_id = ?,
-                title = ?,
-                image_url = ?,
-                content = ?,
-        WHERE id = ?
-        """,
-        (data['category_id'], data['title'], data['image_url'], data['content'], pk)
-    )
-
-    return True if db_cursor.rowcount > 0 else False
-
-def delete_post(pk):
-    with sqlite3.connect("./db.sqlite3") as conn:
-        db_cursor = conn.cursor()
-    
-    db_cursor.execute(
-        """ 
-        DELETE FROM Posts
-        WHERE id = ?
-        """, (pk,)
-    )
-
-    return True if db_cursor.rowcount > 0 else False
 
  
