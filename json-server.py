@@ -27,6 +27,8 @@ class JSONServer(HandleRequests):
             
             response_body = get_all_posts()
             return self.response(response_body, status.HTTP_200_SUCCESS.value)
+        
+        
     def do_POST(self):
 
 
