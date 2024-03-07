@@ -3,8 +3,7 @@ from http.server import HTTPServer
 from monty_handler import HandleRequests, status
 
 from views import create_tag, create_category, create_post_tag, create_user
-from views import get_user_posts, get_all_posts, delete_post
-
+from views import get_user_posts, get_all_posts, delete_post, delete_a_tag
 
 class JSONServer(HandleRequests):
     """
@@ -100,10 +99,20 @@ class JSONServer(HandleRequests):
                 )
          # If true/false... More detailed responses for failing to create user
 
+            
+    def do_DELETE(self):
 
+        url = self.parse_url(self.path)
+        requested_resource = url["requested_resource"]
+        pk = url["pk"]
 
+        if requested_resource == "tags":
+            if pk != 0:
+                successfully_deleted = delete_a_tag(pk)
+                if successfully_deleted:
+                    return self.response("", status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value)
 
-
+                return self.response("Requested resource not found", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
 
 def main():
     host = ""
