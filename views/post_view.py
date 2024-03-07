@@ -109,5 +109,17 @@ def get_user_posts(userId):
 
 
 
+def delete_post(pk):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+    
+    db_cursor.execute(
+        """ 
+        DELETE FROM Posts
+        WHERE id = ?
+        """, (pk,)
+    )
+
+    return True if db_cursor.rowcount > 0 else False
 
  

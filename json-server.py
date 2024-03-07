@@ -3,7 +3,7 @@ from http.server import HTTPServer
 from monty_handler import HandleRequests, status
 
 from views import create_tag, create_category, create_post_tag, create_user
-from views import get_user_posts, get_all_posts
+from views import get_user_posts, get_all_posts, delete_post
 
 
 class JSONServer(HandleRequests):
@@ -99,6 +99,11 @@ class JSONServer(HandleRequests):
                     status.HTTP_400_CLIENT_ERROR_BAD_REQUEST_DATA.value,
                 )
          # If true/false... More detailed responses for failing to create user
+
+
+
+
+
 
 def main():
     host = ""
