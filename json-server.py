@@ -9,6 +9,9 @@ from views import (
     create_category,
     create_post_tag,
     create_user,
+    get_user_posts,
+    get_all_posts,
+    edit_post,
 )
 
 
@@ -74,6 +77,18 @@ class JSONServer(HandleRequests):
                 "Requested resource not found. Check yo self!",
                 status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
             )
+
+    def do_GET(self):
+        url = self.parse_url(self.path)
+        response_body = ""
+
+        if url["requested_resource"] == "posts":
+            if "user_id" in url["query_params"]:
+                response_body = get_user_posts(url["query_params"]["user_id"][0])
+                return self.response(response_body, status.HTTP_200_SUCCESS.value)
+
+            response_body = get_all_posts()
+            return self.response(response_body, status.HTTP_200_SUCCESS.value)
 
     def do_POST(self):
         """Handle POST requests from a client"""
@@ -144,6 +159,7 @@ class JSONServer(HandleRequests):
                     "Please fill out the required fields",
                     status.HTTP_400_CLIENT_ERROR_BAD_REQUEST_DATA.value,
                 )
+        # If true/false... More detailed responses for failing to create user
 
 
 def main():
