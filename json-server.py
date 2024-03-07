@@ -146,9 +146,6 @@ class JSONServer(HandleRequests):
                 )
 
 
-# If true/false... More detailed responses for failing to create user
-
-
 def main():
     host = ""
     port = 8088
