@@ -3,9 +3,7 @@ from http.server import HTTPServer
 from monty_handler import HandleRequests, status
 
 from views import create_tag, create_category, create_post_tag, create_user
-from views import get_user_posts, get_all_posts
-from views.tag_view import delete_a_tag
-
+from views import get_user_posts, get_all_posts, delete_a_tag
 
 class JSONServer(HandleRequests):
     """
