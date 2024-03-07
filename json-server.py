@@ -28,10 +28,8 @@ class JSONServer(HandleRequests):
             response_body = get_all_posts()
             return self.response(response_body, status.HTTP_200_SUCCESS.value)
         
-        
+
     def do_POST(self):
-
-
         """Handle POST requests from a client"""
 
         url = self.parse_url(self.path)
@@ -100,19 +98,7 @@ class JSONServer(HandleRequests):
                     "Please fill out the required fields",
                     status.HTTP_400_CLIENT_ERROR_BAD_REQUEST_DATA.value,
                 )
-
-
-# If true/false... More detailed responses for failing to create user
-
-
-
-
-
-        
-
-
-
-
+         # If true/false... More detailed responses for failing to create user
 
 def main():
     host = ""
