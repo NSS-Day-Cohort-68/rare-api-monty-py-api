@@ -108,25 +108,23 @@ def get_user_posts(userId):
 
 def create_post(x):
     with sqlite3.connect("./db.sqlite3") as conn:
-        conn.row_factory = sqlite3.Row
+        # conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
-    db_cursor.execute(
-        """ 
-        INSERT INTO Posts
-        (user_id, category_id, title, publication_date, image_url, content, approved)
-        VALUES
-        (?, ?, ?, ?, ?, ?, ?)
-        """,
-        (
-            x["user_id"],
-            x["category_id"],
-            x["title"],
-            x["publication_date"],
-            x["image_url"],
-            x["content"],
-            x["approved"],
-        ),
-    )
+        db_cursor.execute(
+            """ 
+            INSERT INTO Posts (user_id, category_id, title, publication_date, image_url, content, approved)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                x["user_id"],
+                x["category_id"],
+                x["title"],
+                x["publication_date"],
+                x["image_url"],
+                x["content"],
+                x["approved"],
+            ),
+        )
 
     return True if db_cursor.rowcount > 0 else False
