@@ -92,3 +92,6 @@ INSERT INTO Users ('first_name', 'last_name', 'email', 'bio', 'username', 'passw
 VALUES ('Jimmy', 'Johns', 'jimmy@johnmail.com', 'I like sandwiches.', 'jjsandwich', 'turkeytom', 12/12/1212);
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
 VALUES (1, 1, 'Sandwich Things', 12202020, null, 'Today, I made a sandwich', 1);
+
+INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
+VALUES (1, 1, 'Things', "12-20-2020", null, 'Yesterday, I made a sandwich', 1);
