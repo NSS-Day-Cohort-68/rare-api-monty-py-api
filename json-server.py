@@ -13,6 +13,7 @@ from views import (
     get_all_posts,
     edit_post,
     delete_a_tag,
+    delete_category,
 )
 
 
@@ -171,6 +172,19 @@ class JSONServer(HandleRequests):
         if requested_resource == "tags":
             if pk != 0:
                 successfully_deleted = delete_a_tag(pk)
+                if successfully_deleted:
+                    return self.response(
+                        "", status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value
+                    )
+
+                return self.response(
+                    "Requested resource not found",
+                    status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
+                )
+
+        if requested_resource == "categories":
+            if pk != 0:
+                successfully_deleted = delete_category(pk)
                 if successfully_deleted:
                     return self.response(
                         "", status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value
