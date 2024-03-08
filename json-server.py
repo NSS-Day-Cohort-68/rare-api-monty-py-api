@@ -41,7 +41,7 @@ class JSONServer(HandleRequests):
                 successfully_updated = edit_post(pk, request_body)
                 if successfully_updated:
                     return self.response(
-                        "Success, post updated! :)",
+                        "",
                         status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value,
                     )
                 return self.response(
@@ -54,7 +54,7 @@ class JSONServer(HandleRequests):
                 successfully_updated = update_category(pk, request_body)
                 if successfully_updated:
                     return self.response(
-                        "Success, post updated! :)",
+                        "",
                         status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value,
                     )
                 return self.response(
@@ -67,14 +67,15 @@ class JSONServer(HandleRequests):
                 successfully_updated = edit_tag(request_body, pk)
                 if successfully_updated:
                     return self.response(
-                        "Success, post updated!",
+                        "",
                         status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value,
                     )
 
-                return self.response(
-                    "Bad request data. Check yo self!",
-                    status.HTTP_400_CLIENT_ERROR_BAD_REQUEST_DATA.value,
-                )
+                else:
+                    return self.response(
+                        "Bad request data. Check yo self!",
+                        status.HTTP_400_CLIENT_ERROR_BAD_REQUEST_DATA.value,
+                    )
         else:
             return self.response(
                 "Requested resource not found. Check yo self!",
