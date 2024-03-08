@@ -70,11 +70,11 @@ def get_user_posts(userId):
             u.first_name,
             u.last_name
         FROM Posts p
-        WHERE p.user_id = ?
-        JOIN User u ON u.id = p.user_id
+        JOIN Users u ON u.id = p.user_id
         JOIN Categories c ON c.id = p.category_id
+        WHERE p.user_id = ?
         """,
-        (userId,),
+        (userId,)
     )
     posts = []
     query_results = db_cursor.fetchall()
@@ -90,12 +90,7 @@ def get_user_posts(userId):
             "user_id": row["user_id"],
             "category_id": row["category_id"],
         }
-
-        post["category"] = {
-            "id": row["category_id"],
-            "label": row["label"],
-        }
-
+        post["category"] = {"id": row["category_id"], "label": row["label"]}
         post["user"] = {
             "id": row["user_id"],
             "first_name": row["first_name"],
