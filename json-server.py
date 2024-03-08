@@ -65,7 +65,7 @@ class JSONServer(HandleRequests):
                 successfully_updated = edit_tag(request_body, pk)
                 if successfully_updated:
                     return self.response(
-                        "Success, post updated! :)",
+                        "Success, post updated!",
                         status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value,
                     )
 
