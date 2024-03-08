@@ -1,13 +1,14 @@
 import sqlite3
 import json
 
+
 def get_all_posts():
     with sqlite3.connect("./db.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
     db_cursor.execute(
-    """ 
+        """ 
     SELECT 
         p.id,
         p.user_id,
@@ -29,34 +30,31 @@ def get_all_posts():
     query_results = db_cursor.fetchall()
     for row in query_results:
         post = {
-            'id': row['id'],
-            'title': row['title'],
-            'publication_date': row['publication_date'],
-            'image_url': row['image_url'],
-            'content': row['content'],
-            'approved': row['approved'],
-            'user_id': row['user_id'],
-            'category_id': row['category_id']
+            "id": row["id"],
+            "title": row["title"],
+            "publication_date": row["publication_date"],
+            "image_url": row["image_url"],
+            "content": row["content"],
+            "approved": row["approved"],
+            "user_id": row["user_id"],
+            "category_id": row["category_id"],
         }
-        post['category'] = {
-            'id': row['category_id'],
-            'label': row['label']
-        }
-        post['user'] = {
-            'id': row['user_id'],
-            'first_name': row['first_name'],
-            'last_name': row['last_name']
+        post["category"] = {"id": row["category_id"], "label": row["label"]}
+        post["user"] = {
+            "id": row["user_id"],
+            "first_name": row["first_name"],
+            "last_name": row["last_name"],
         }
         posts.append(post)
     serialized_posts = json.dumps(posts)
     return serialized_posts
-    
+
 
 def get_user_posts(userId):
     with sqlite3.connect("./db.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
-    
+
     db_cursor.execute(
         """ 
         SELECT 
@@ -75,32 +73,33 @@ def get_user_posts(userId):
         WHERE p.user_id = ?
         JOIN User u ON u.id = p.user_id
         JOIN Categories c ON c.id = p.category_id
-        """, (userId,)
+        """,
+        (userId,),
     )
     posts = []
     query_results = db_cursor.fetchall()
 
     for row in query_results:
         post = {
-            'id': row['id'],
-            'title': row['title'],
-            'publication_date': row['publication_date'],
-            'image_url': row['image_url'],
-            'content': row['content'],
-            'approved': row['approved'],
-            'user_id': row['user_id'],
-            'category_id': row['category_id']
+            "id": row["id"],
+            "title": row["title"],
+            "publication_date": row["publication_date"],
+            "image_url": row["image_url"],
+            "content": row["content"],
+            "approved": row["approved"],
+            "user_id": row["user_id"],
+            "category_id": row["category_id"],
         }
 
-        post['category'] = {
-            'id': row['category_id'],
-            'label': row['label'],
+        post["category"] = {
+            "id": row["category_id"],
+            "label": row["label"],
         }
 
-        post['user'] = {
-            'id': row['user_id'],
-            'first_name': row['first_name'],
-            'last_name': row['last_name']
+        post["user"] = {
+            "id": row["user_id"],
+            "first_name": row["first_name"],
+            "last_name": row["last_name"],
         }
         posts.append(post)
     serialized_posts = json.dumps(posts)
@@ -123,3 +122,25 @@ def delete_post(pk):
         return True if db_cursor.rowcount > 0 else False
 
  
+def create_post(x):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        # conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute(
+            """ 
+            INSERT INTO Posts (user_id, category_id, title, publication_date, image_url, content, approved)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                x["user_id"],
+                x["category_id"],
+                x["title"],
+                x["publication_date"],
+                x["image_url"],
+                x["content"],
+                x["approved"],
+            ),
+        )
+
+    return True if db_cursor.rowcount > 0 else False
