@@ -14,6 +14,7 @@ from views import (
     edit_post,
     delete_a_tag,
     delete_category,
+    create_post,
 )
 
 
@@ -153,6 +154,21 @@ class JSONServer(HandleRequests):
 
             if new_post_tag_id:
                 response_body = {"id": new_post_tag_id}
+                return self.response(
+                    json.dumps(response_body), status.HTTP_201_SUCCESS_CREATED.value
+                )
+            else:
+                return self.response(
+                    "Please fill out the required fields",
+                    status.HTTP_400_CLIENT_ERROR_BAD_REQUEST_DATA.value,
+                )
+        elif requested_resource == "posts":
+            post_data = json.loads(request_body)
+
+            new_post_id = create_post(post_data)
+
+            if new_post_id:
+                response_body = {"id": new_post_id}
                 return self.response(
                     json.dumps(response_body), status.HTTP_201_SUCCESS_CREATED.value
                 )
