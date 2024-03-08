@@ -106,6 +106,22 @@ def get_user_posts(userId):
     return serialized_posts
 
 
+
+
+def delete_post(pk):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+    
+        db_cursor.execute(
+            """ 
+            DELETE FROM Posts
+            WHERE id = ?
+            """, (pk,)
+        )
+
+        return True if db_cursor.rowcount > 0 else False
+
+ 
 def create_post(x):
     with sqlite3.connect("./db.sqlite3") as conn:
         # conn.row_factory = sqlite3.Row
