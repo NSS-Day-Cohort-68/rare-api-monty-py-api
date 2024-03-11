@@ -67,7 +67,7 @@ def edit_tag(tag_data, pk):
             """
             UPDATE Tags
                 SET
-                    label = ?,
+                    label = ?
             WHERE id = ?
             """,
             (tag_data["label"], pk),

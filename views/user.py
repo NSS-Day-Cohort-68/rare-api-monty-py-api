@@ -21,20 +21,21 @@ def login_user(user):
             """
             select id, username
             from Users
-            where username = ?
-            and password = ?
-        """,
-            (user["username"], user["password"]),
+            where email = ?
+            """,
+            (user,),
         )
 
         user_from_db = db_cursor.fetchone()
 
         if user_from_db is not None:
             response = {"valid": True, "token": user_from_db["id"]}
+            response = {"valid": True, "token": user_from_db["id"]}
         else:
             response = {"valid": False}
+            response = {"valid": False}
 
-        return json.dumps(response)
+        return response
 
 
 def create_user(user):
