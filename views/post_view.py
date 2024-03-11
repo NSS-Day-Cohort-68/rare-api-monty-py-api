@@ -70,9 +70,9 @@ def get_user_posts(userId):
             u.first_name,
             u.last_name
         FROM Posts p
-        WHERE p.user_id = ?
-        JOIN User u ON u.id = p.user_id
+        JOIN Users u ON u.id = p.user_id
         JOIN Categories c ON c.id = p.category_id
+        WHERE p.user_id = ?
         """,
         (userId,),
     )
@@ -90,12 +90,7 @@ def get_user_posts(userId):
             "user_id": row["user_id"],
             "category_id": row["category_id"],
         }
-
-        post["category"] = {
-            "id": row["category_id"],
-            "label": row["label"],
-        }
-
+        post["category"] = {"id": row["category_id"], "label": row["label"]}
         post["user"] = {
             "id": row["user_id"],
             "first_name": row["first_name"],
@@ -104,6 +99,21 @@ def get_user_posts(userId):
         posts.append(post)
     serialized_posts = json.dumps(posts)
     return serialized_posts
+
+
+def delete_post(pk):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute(
+            """ 
+            DELETE FROM Posts
+            WHERE id = ?
+            """,
+            (pk,),
+        )
+
+        return True if db_cursor.rowcount > 0 else False
 
 
 def edit_post(pk, data):

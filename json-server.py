@@ -11,10 +11,12 @@ from views import (
     create_user,
     get_user_posts,
     get_all_posts,
+    delete_post,
     edit_post,
     delete_a_tag,
     delete_category,
     create_post,
+    login_user,
 )
 
 
@@ -93,6 +95,18 @@ class JSONServer(HandleRequests):
 
             response_body = get_all_posts()
             return self.response(response_body, status.HTTP_200_SUCCESS.value)
+        elif url["requested_resource"] == "users":
+            if "user_email" in url["query_params"]:
+                response_body = login_user(url["query_params"]["user_email"][0])
+                if response_body.get("valid") is True:
+                    return self.response(
+                        json.dumps(response_body), status.HTTP_200_SUCCESS.value
+                    )
+                else:
+                    return self.response(
+                        "user not found, please register",
+                        status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
+                    )
 
     def do_POST(self):
         """Handle POST requests from a client"""
@@ -189,6 +203,19 @@ class JSONServer(HandleRequests):
         if requested_resource == "tags":
             if pk != 0:
                 successfully_deleted = delete_a_tag(pk)
+                if successfully_deleted:
+                    return self.response(
+                        "", status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value
+                    )
+
+                return self.response(
+                    "Requested resource not found",
+                    status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
+                )
+
+        if requested_resource == "posts":
+            if pk != 0:
+                successfully_deleted = delete_post(pk)
                 if successfully_deleted:
                     return self.response(
                         "", status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value
