@@ -5,6 +5,7 @@ from .post_view import (
     get_all_posts,
     get_user_posts,
     delete_post,
+    delete_post,
     edit_post,
     create_post,
 )

@@ -12,6 +12,7 @@ from views import (
     get_user_posts,
     get_all_posts,
     delete_post,
+    delete_post,
     edit_post,
     delete_a_tag,
     delete_category,

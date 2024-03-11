@@ -30,7 +30,9 @@ def login_user(user):
 
         if user_from_db is not None:
             response = {"valid": True, "token": user_from_db["id"]}
+            response = {"valid": True, "token": user_from_db["id"]}
         else:
+            response = {"valid": False}
             response = {"valid": False}
 
         return response
@@ -51,17 +53,9 @@ def create_user(user):
 
         db_cursor.execute(
             """
-        Insert into Users (first_name, last_name, username, email, password, bio, created_on, active) values (?, ?, ?, ?, ?, ?, ?, 1)
+        Insert into Users (first_name, last_name, username, email) values (?, ?, ?, ?)
         """,
-            (
-                user["first_name"],
-                user["last_name"],
-                user["username"],
-                user["email"],
-                user["password"],
-                user["bio"],
-                datetime.now(),
-            ),
+            (user["first_name"], user["last_name"], user["username"], user["email"]),
         )
 
         id = db_cursor.lastrowid
