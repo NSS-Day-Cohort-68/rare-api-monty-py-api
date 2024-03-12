@@ -73,6 +73,7 @@ def get_user_posts(userId):
         JOIN Users u ON u.id = p.user_id
         JOIN Categories c ON c.id = p.category_id
         WHERE p.user_id = ?
+        ORDER BY p.publication_date DESC
         """,
         (userId,),
     )
