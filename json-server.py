@@ -93,6 +93,8 @@ class JSONServer(HandleRequests):
             if "user_id" in url["query_params"]:
                 response_body = get_user_posts(url["query_params"]["user_id"][0])
                 return self.response(response_body, status.HTTP_200_SUCCESS.value)
+            elif "post_id" in url["query_params"]:
+                response_body = get_post_by_id(url["query_params"]["post_id"][0])
 
             response_body = get_all_posts()
             return self.response(response_body, status.HTTP_200_SUCCESS.value)

@@ -101,6 +101,27 @@ def get_user_posts(userId):
     return serialized_posts
 
 
+def get_post_by_id(id):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute(
+            """
+        SELECT p.*
+        FROM Posts p
+        WHERE p.id = ?
+            """,
+            (pk,),
+        )
+        query_results = db_cursor.fetchone()
+
+        dictionary_version_of_object = dict(query_results)
+        serialized_post = json.dumps(dictionary_version_of_object)
+
+    return serialized_post
+
+
 def delete_post(pk):
     with sqlite3.connect("./db.sqlite3") as conn:
         db_cursor = conn.cursor()
