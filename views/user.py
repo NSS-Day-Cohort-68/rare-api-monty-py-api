@@ -51,9 +51,15 @@ def create_user(user):
 
         db_cursor.execute(
             """
-        Insert into Users (first_name, last_name, username, email) values (?, ?, ?, ?)
+        Insert into Users (first_name, last_name, username, email, created_on, active) values (?, ?, ?, ?, ?, 1)
         """,
-            (user["first_name"], user["last_name"], user["username"], user["email"]),
+            (
+                user["first_name"],
+                user["last_name"],
+                user["username"],
+                user["email"],
+                datetime.now(),
+            ),
         )
 
         id = db_cursor.lastrowid
