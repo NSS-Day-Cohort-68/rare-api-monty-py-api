@@ -105,7 +105,7 @@ class JSONServer(HandleRequests):
                     )
                 else:
                     return self.response(
-                        "user not found, please register",
+                        json.dumps(response_body),
                         status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
                     )
 
