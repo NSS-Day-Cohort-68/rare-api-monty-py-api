@@ -131,7 +131,7 @@ def get_post_by_id(pk):
                 "post_image_url": row["image_url"],
                 "post_content": row["content"],
                 "post_date": row["publication_date"],
-                "name": {
+                "post_author": {
                     "author_first_name": row["first_name"],
                     "author_last_name": row["last_name"],
                 },
