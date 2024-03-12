@@ -8,6 +8,7 @@ from .post_view import (
     delete_post,
     edit_post,
     create_post,
+    get_post_by_id,
 )
 from .user import create_user, login_user
 from .post_tag_view import create_post_tag

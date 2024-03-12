@@ -101,6 +101,49 @@ def get_user_posts(userId):
     return serialized_posts
 
 
+def get_post_by_id(pk):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute(
+            """
+        SELECT 
+            p.title,
+            p.image_url,
+            p.content,
+            p.publication_date,
+            u.first_name,
+            u.last_name
+        FROM Posts p
+        JOIN users u ON p.user_id = u.id
+        WHERE p.id = ?
+            """,
+            (pk,),
+        )
+        query_results = db_cursor.fetchall()
+
+        post = []
+
+        for row in query_results:
+            single_post = {
+                "post_title": row["title"],
+                "post_image_url": row["image_url"],
+                "post_content": row["content"],
+                "post_date": row["publication_date"],
+                "post_author": {
+                    "author_first_name": row["first_name"],
+                    "author_last_name": row["last_name"],
+                },
+            }
+
+            post.append(single_post)
+
+        serialized_post = json.dumps(post)
+
+    return serialized_post
+
+
 def delete_post(pk):
     with sqlite3.connect("./db.sqlite3") as conn:
         db_cursor = conn.cursor()
