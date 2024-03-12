@@ -101,7 +101,7 @@ def get_user_posts(userId):
     return serialized_posts
 
 
-def get_post_by_id(id):
+def get_post_by_id(pk):
     with sqlite3.connect("./db.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
