@@ -112,16 +112,32 @@ def get_post_by_id(pk):
             p.title,
             p.image_url,
             p.content,
-            p.publication_date
+            p.publication_date,
+            u.first_name,
+            u.last_name
         FROM Posts p
+        JOIN users u ON p.user_id = u.id
         WHERE p.id = ?
             """,
             (pk,),
         )
-        query_results = db_cursor.fetchone()
+        query_results = db_cursor.fetchall()
 
-        dictionary_version_of_object = dict(query_results)
-        serialized_post = json.dumps(dictionary_version_of_object)
+        post = []
+
+        for row in query_results:
+            single_post = {
+                "post_title": row["title"],
+                "post_image_url": row["image_url"],
+                "post_content": row["content"],
+                "post_date": row["publication_date"],
+                "author_first_name": row["first_name"],
+                "author_last_name": row["last_name"],
+            }
+
+            post.append(single_post)
+
+        serialized_post = json.dumps(post)
 
     return serialized_post
 
