@@ -108,7 +108,11 @@ def get_post_by_id(pk):
 
         db_cursor.execute(
             """
-        SELECT p.*
+        SELECT 
+            p.title,
+            p.image_url,
+            p.content,
+            p.publication_date
         FROM Posts p
         WHERE p.id = ?
             """,
