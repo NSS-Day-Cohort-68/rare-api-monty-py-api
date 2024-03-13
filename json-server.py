@@ -129,9 +129,9 @@ class JSONServer(HandleRequests):
             new_user_id = create_user(user_data)
 
             if new_user_id:
-                response_body = {"id": new_user_id}
+                response_body = new_user_id
                 return self.response(
-                    json.dumps(response_body), status.HTTP_201_SUCCESS_CREATED.value
+                    response_body, status.HTTP_201_SUCCESS_CREATED.value
                 )
             else:
                 return self.response(
@@ -190,9 +190,9 @@ class JSONServer(HandleRequests):
             new_post_id = create_post(post_data)
 
             if new_post_id:
-                response_body = {"id": new_post_id}
+                response_body = new_post_id
                 return self.response(
-                    json.dumps(response_body), status.HTTP_201_SUCCESS_CREATED.value
+                    response_body, status.HTTP_201_SUCCESS_CREATED.value
                 )
             else:
                 return self.response(
