@@ -39,7 +39,7 @@ CREATE TABLE "Posts" (
   "image_url" varchar,
   "content" varchar,
   "approved" bit,
-  FOREIGN KEY(`user_id`) REFERENCES `Users`(`id`)
+  FOREIGN KEY(`user_id`) REFERENCES `Users`(`id`),
 );
 
 CREATE TABLE "Comments" (
@@ -98,6 +98,4 @@ INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image
 VALUES (1, 1, 'Things', "2011-02-01-", null, 'Yesterday, I made a sandwich', 1);
 
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
-VALUES (1, 1, 'Things', "1984-09-31", null, 'Tomorrow, I will make a sandwich', 1);
-
-DROP TABLE IF EXISTS "Posts"
+VALUES (1, 1, 'Things', "12-21-2020", null, 'Tomorrow, I will make a sandwich', 1);
