@@ -19,6 +19,7 @@ from views import (
     create_post,
     login_user,
     get_post_by_id,
+    get_all_categories
 )
 
 
@@ -114,6 +115,12 @@ class JSONServer(HandleRequests):
                         json.dumps(response_body),
                         status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value,
                     )
+        elif url["requested_resource"] == "categories":
+            response_body = get_all_categories()
+            return self.response(response_body, status.HTTP_200_SUCCESS.value)
+        
+        else:
+            return self.response("", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
 
     def do_POST(self):
         """Handle POST requests from a client"""
