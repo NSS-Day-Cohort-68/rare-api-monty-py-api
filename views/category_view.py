@@ -15,6 +15,7 @@ def create_category(category_data):
     """
     with sqlite3.connect("./db.sqlite3") as conn:
         db_cursor = conn.cursor()
+        conn.row_factory = sqlite3.Row
 
         db_cursor.execute(
             """
@@ -24,9 +25,7 @@ def create_category(category_data):
             (category_data["label"],),
         )
 
-        new_category_id = db_cursor.lastrowid
-
-    return new_category_id
+    return True if db_cursor.rowcount > 0 else False
 
 
 def delete_category(pk):
