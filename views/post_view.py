@@ -24,6 +24,7 @@ def get_all_posts():
     FROM Posts p
     JOIN Users u ON u.id = p.user_id
     JOIN Categories c ON c.id = p.category_id
+    ORDER BY p.publication_date DESC
     """
     )
     posts = []
