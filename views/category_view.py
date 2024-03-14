@@ -82,35 +82,26 @@ def update_category(pk, category_data):
     return True if db_cursor.rowcount > 0 else False
 
 
-def get_all_categories(url):
-    """
-    Retrieves all categories from a specified URL.
+def get_all_categories():
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
 
-    Args:
-        url (str): The URL from which to retrieve the categories.
-
-    Returns:
-        list: A list of dictionaries representing the categories retrieved from the URL.
-    """
-    if url["query_params"]:
-        with sqlite3.connect("./db.sqlite3") as conn:
-            conn.row_factory = sqlite3.Row
-            db_cursor = conn.cursor()
-
-            db_cursor.execute(
-                """
-            SELECT
-                c.id,
-                c.label
-            FROM Categories c
+        db_cursor.execute(
             """
-            )
-            query_results = db_cursor.fetchall()
+        SELECT
+            c.id,
+            c.label
+        FROM Categories c
+        ORDER BY label COLLATE NOCASE
+        """
+        )
+        query_results = db_cursor.fetchall()
 
-            category = []
-            for row in query_results:
-                category.append(dict(row))
+        category = []
+        for row in query_results:
+            category.append(dict(row))
 
-            serialized_categories = json.dumps(category)
+        serialized_categories = json.dumps(category)
 
-        return serialized_categories
+    return serialized_categories
