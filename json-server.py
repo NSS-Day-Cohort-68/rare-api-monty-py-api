@@ -19,7 +19,8 @@ from views import (
     login_user,
     get_post_by_id,
     get_all_categories,
-    get_all_tags
+    get_all_tags,
+    create_comment,
 )
 
 
@@ -118,13 +119,15 @@ class JSONServer(HandleRequests):
         elif url["requested_resource"] == "categories":
             response_body = get_all_categories()
             return self.response(response_body, status.HTTP_200_SUCCESS.value)
-        
+
         elif url["requested_resource"] == "tags":
             response_body = get_all_tags()
             return self.response(response_body, status.HTTP_200_SUCCESS.value)
-        
+
         else:
-            return self.response("", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
+            return self.response(
+                "", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value
+            )
 
     def do_POST(self):
         """Handle POST requests from a client"""
@@ -156,9 +159,7 @@ class JSONServer(HandleRequests):
             new_category = create_category(category_data)
 
             if new_category:
-                return self.response(
-                    "", status.HTTP_201_SUCCESS_CREATED.value
-                )
+                return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
             else:
                 return self.response(
                     "Please fill out the required fields",
@@ -204,6 +205,18 @@ class JSONServer(HandleRequests):
                 return self.response(
                     response_body, status.HTTP_201_SUCCESS_CREATED.value
                 )
+            else:
+                return self.response(
+                    "Please fill out the required fields",
+                    status.HTTP_400_CLIENT_ERROR_BAD_REQUEST_DATA.value,
+                )
+        elif requested_resource == "comments":
+            comment_data = json.loads(request_body)
+
+            new_comment_id = create_comment(comment_data)
+
+            if new_comment_id:
+                return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
             else:
                 return self.response(
                     "Please fill out the required fields",

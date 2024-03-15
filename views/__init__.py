@@ -1,4 +1,9 @@
-from .category_view import update_category, create_category, delete_category, get_all_categories
+from .category_view import (
+    update_category,
+    create_category,
+    delete_category,
+    get_all_categories,
+)
 from .tag_view import edit_tag, create_tag, delete_a_tag, get_all_tags
 from .comment_view import create_comment, delete_comment
 from .post_view import (
