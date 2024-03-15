@@ -19,6 +19,7 @@ from views import (
     login_user,
     get_post_by_id,
     get_all_categories,
+    get_all_tags,
     create_comment,
 )
 
@@ -117,6 +118,10 @@ class JSONServer(HandleRequests):
                     )
         elif url["requested_resource"] == "categories":
             response_body = get_all_categories()
+            return self.response(response_body, status.HTTP_200_SUCCESS.value)
+
+        elif url["requested_resource"] == "tags":
+            response_body = get_all_tags()
             return self.response(response_body, status.HTTP_200_SUCCESS.value)
 
         else:
