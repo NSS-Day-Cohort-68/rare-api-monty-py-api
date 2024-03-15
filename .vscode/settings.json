@@ -7,5 +7,6 @@
                 "cmd": "workbench.action.debug.restart"
             }
         ]
-    }
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter"
 }
