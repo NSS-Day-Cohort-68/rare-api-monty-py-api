@@ -1,3 +1,11 @@
+-- Run this code to delete from the table
+
+DELETE FROM Posts;
+
+DROP TABLE IF EXISTS Posts;
+
+--end block
+
 CREATE TABLE "Users" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "first_name" varchar,
@@ -39,7 +47,7 @@ CREATE TABLE "Posts" (
   "image_url" varchar,
   "content" varchar,
   "approved" bit,
-  FOREIGN KEY(`user_id`) REFERENCES `Users`(`id`),
+  FOREIGN KEY(`user_id`) REFERENCES `Users`(`id`)
 );
 
 CREATE TABLE "Comments" (
@@ -92,10 +100,16 @@ INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.c
 INSERT INTO Users ('first_name', 'last_name', 'email', 'bio', 'username', 'password', 'created_on')
 VALUES ('Jimmy', 'Johns', 'jimmy@johnmail.com', 'I like sandwiches.', 'jjsandwich', 'turkeytom', 12/12/1212);
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
-VALUES (1, 1, 'Sandwich Things', "2011-03-21", null, 'Today, I made a sandwich', 1);
+VALUES (1, 6, 'A Sandwich on Monday', "2024/03/11", 'https://insanelygoodrecipes.com/wp-content/uploads/2021/03/Homemade-Grilled-Cheese-Sandwich-with-Tomatoes.png', 'Yay, I made a meatball sandwich on Monday', 1);
 
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
-VALUES (1, 1, 'Things', "2011-02-01-", null, 'Yesterday, I made a sandwich', 1);
+VALUES (1, 2, 'A Sandwich on Tuesday', "2024/03/12", 'https://www.livofy.com/health/wp-content/uploads/2021/09/Club-Sandwich-with-Super-Mayo.jpg', 'On Tuesday I made a meat sandwich, oh my', 1);
 
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
-VALUES (1, 1, 'Things', "12-21-2020", null, 'Tomorrow, I will make a sandwich', 1);
+VALUES (2, 6, 'A Sandwich on Wednesday', "2024/03/13", 'https://www.simplystacie.net/wp-content/uploads/2017/04/Taco-Grilled-Cheese-3.jpg', 'Today I made a taco sandwich', 1);
+
+INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
+VALUES (2, 4, 'A Sandwich on Thursday', "2024/03/14", 'https://images.nightcafe.studio/jobs/9M9W2nz2gZKZ5CAsi7sx/9M9W2nz2gZKZ5CAsi7sx--1--rtmxx.jpg?tr=w-1600,c-at_max', 'I made an ice cream sandwich', 1);
+
+INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
+VALUES (3, 1, 'A Sandwich That is not Approved', "2024/03/01", null, 'My Sandwich was not approved', 0);
