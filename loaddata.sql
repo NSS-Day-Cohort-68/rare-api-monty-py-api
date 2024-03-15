@@ -2,6 +2,8 @@
 
 DELETE FROM Posts;
 
+DROP TABLE IF EXISTS Posts;
+
 --end block
 
 CREATE TABLE "Users" (
@@ -45,7 +47,7 @@ CREATE TABLE "Posts" (
   "image_url" varchar,
   "content" varchar,
   "approved" bit,
-  FOREIGN KEY(`user_id`) REFERENCES `Users`(`id`),
+  FOREIGN KEY(`user_id`) REFERENCES `Users`(`id`)
 );
 
 CREATE TABLE "Comments" (
@@ -104,10 +106,10 @@ INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image
 VALUES (1, 2, 'A Sandwich on Tuesday', "2024/03/12", 'https://www.livofy.com/health/wp-content/uploads/2021/09/Club-Sandwich-with-Super-Mayo.jpg', 'On Tuesday I made a meat sandwich, oh my', 1);
 
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
-VALUES (2, 6, 'A Sandwich Today', "2024/03/14", 'https://www.simplystacie.net/wp-content/uploads/2017/04/Taco-Grilled-Cheese-3.jpg', 'Today I made a taco sandwich', 1);
+VALUES (2, 6, 'A Sandwich on Wednesday', "2024/03/13", 'https://www.simplystacie.net/wp-content/uploads/2017/04/Taco-Grilled-Cheese-3.jpg', 'Today I made a taco sandwich', 1);
 
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
-VALUES (2, 4, 'A Sandwich for the Future', "2024/03/26", 'https://images.nightcafe.studio/jobs/9M9W2nz2gZKZ5CAsi7sx/9M9W2nz2gZKZ5CAsi7sx--1--rtmxx.jpg?tr=w-1600,c-at_max', 'In the future, I will create a sandwich', 1);
+VALUES (2, 4, 'A Sandwich on Thursday', "2024/03/14", 'https://images.nightcafe.studio/jobs/9M9W2nz2gZKZ5CAsi7sx/9M9W2nz2gZKZ5CAsi7sx--1--rtmxx.jpg?tr=w-1600,c-at_max', 'I made an ice cream sandwich', 1);
 
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
 VALUES (3, 1, 'A Sandwich That is not Approved', "2024/03/01", null, 'My Sandwich was not approved', 0);
